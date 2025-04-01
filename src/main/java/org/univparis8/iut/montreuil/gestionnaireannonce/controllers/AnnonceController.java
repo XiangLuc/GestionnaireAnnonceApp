@@ -63,4 +63,15 @@ public class AnnonceController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAnnonceById(@PathVariable int id) {
+        Annonce annonce = annonceImpl.getAnnonceById(id);
+        if (annonce != null) {
+            return ResponseEntity.ok(annonce);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Annonce non trouvée avec l'ID : " + id);  // Message d'erreur si l'annonce n'est pas trouvée
+        }
+    }
 }
