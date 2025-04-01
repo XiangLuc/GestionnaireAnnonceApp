@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.univ-paris8.iut.montreuil</groupId>
-    <artifactId>GestionnaireConge</artifactId>
+    <artifactId>GestionnaireAnnonce</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>GestionnaireConge</name>
-    <description>GestionnaireConge</description>
+    <name>GestionnaireAnnonce</name>
+    <description>GestionnaireAnnonce</description>
     <url/>
     <licenses>
         <license/>
@@ -52,6 +52,23 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
     </dependencies>
 
