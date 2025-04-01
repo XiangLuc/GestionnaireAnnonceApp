@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface IAnnonce {
 
     List<Annonce> getListAnnonces();
-    Optional<Annonce> getAnnonceById(int id);
+    Annonce getAnnonceById(int id);
     void addAnnonce(Annonce annonce);
     void deleteAnnonce(int id);
 

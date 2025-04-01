@@ -2,14 +2,13 @@ package org.univparis8.iut.montreuil.gestionnaireannonce.services.impls;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.univparis8.iut.montreuil.gestionnaireannonce.entities.Annonce;
 import org.univparis8.iut.montreuil.gestionnaireannonce.repositories.AnnonceRepository;
 import org.univparis8.iut.montreuil.gestionnaireannonce.services.interfaces.IAnnonce;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AnnonceImpl implements IAnnonce {
@@ -21,28 +20,33 @@ public class AnnonceImpl implements IAnnonce {
         this.annonceRepository = annonceRepository;
     }
 
-    @PreAuthorize("hasRole('ADMIN')or('USER')")
     @Override
     public List<Annonce> getListAnnonces() {
         return annonceRepository.findAll();
     }
 
-    @PreAuthorize("hasRole('ADMIN')or('USER')")
     @Override
-    public Optional<Annonce> getAnnonceById(int id) {
-        return annonceRepository.findById(id);
+    public Annonce getAnnonceById(int id) {
+        return annonceRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Annonce non trouvée avec l'ID: " + id));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
     @Override
     public void addAnnonce(Annonce annonce) {
+        if (annonce == null) {
+            throw new IllegalArgumentException("L'annonce ne peut pas être nulle");
+        }
         annonceRepository.save(annonce);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @Transactional
     @Override
     public void deleteAnnonce(int id) {
-        annonceRepository.deleteById(id);
+        try {
+            annonceRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new IllegalArgumentException("Aucune annonce trouvée avec l'ID: " + id, e);
+        }
     }
 }
